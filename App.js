@@ -47,15 +47,17 @@ const SunIcon = props => (
 function App() {
   const { user, initializing } = useAuthState(firebase.auth());
   const [darkMode, setDarkMode] = useDarkMode();
-
+  
   const brandLogo = darkMode
     ? `${process.env.PUBLIC_URL}/logo_white.svg`
     : `${process.env.PUBLIC_URL}/logo.svg`;
 
   const ThemeIcon = darkMode ? SunIcon : MoonIcon;
+  
   var provider = new firebase.auth.GoogleAuthProvider();
+  
   firebase.auth().signInWithRedirect(provider);
-
+  
   const signOut = async () => {
     try {
       await firebase.auth().signOut();
