@@ -9,14 +9,16 @@ import { useAuthState, useDarkMode } from './hooks';
 import Channel from './components/Channel';
 import Loader from './components/Loader';
 
-firebase.initializeApp({
-  apiKey: "AIzaSyCRMZjr9PA3mk_VajNRXruydPPgq-VF25A",
+var firebaseConfig = {
+    apiKey: "AIzaSyCRMZjr9PA3mk_VajNRXruydPPgq-VF25A",
     authDomain: "my-chat-app-62791.firebaseapp.com",
     projectId: "my-chat-app-62791",
     storageBucket: "my-chat-app-62791.appspot.com",
     messagingSenderId: "837483986851",
     appId: "1:837483986851:web:645fb00592a47f523d2416"
-});
+  };
+  // Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 const MoonIcon = props => (
   <svg
@@ -54,9 +56,18 @@ function App() {
 
   const ThemeIcon = darkMode ? SunIcon : MoonIcon;
   
-  const provider = new firebase.auth.GoogleAuthProvider();
-  
-  firebase.auth().signInWithRedirect(provider);
+  const signInWithGoogle = async () => {
+    // Retrieve Google provider object
+    const provider = new firebase.auth.GoogleAuthProvider();
+    // Set language to the default browser preference
+    firebase.auth().useDeviceLanguage();
+    // Start sign in process
+    try {
+      await firebase.auth().signInWithPopup(provider);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   
   const signOut = async () => {
     try {
