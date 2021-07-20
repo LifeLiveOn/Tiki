@@ -54,7 +54,7 @@ function App() {
 
   const ThemeIcon = darkMode ? SunIcon : MoonIcon;
   
-  var provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider();
   
   firebase.auth().signInWithRedirect(provider);
   
