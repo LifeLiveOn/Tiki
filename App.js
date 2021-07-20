@@ -56,17 +56,14 @@ function App() {
 
   const ThemeIcon = darkMode ? SunIcon : MoonIcon;
   
+  provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
   const signInWithGoogle = async () => {
     // Retrieve Google provider object
     const provider = new firebase.auth.GoogleAuthProvider();
     // Set language to the default browser preference
     firebase.auth().useDeviceLanguage();
     // Start sign in process
-    try {
-      await firebase.auth().signInWithPopup(provider);
-    } catch (error) {
-      console.log(error.message);
-    }
+    firebase.auth().signInWithRedirect(provider);
   };
   
   const signOut = async () => {
